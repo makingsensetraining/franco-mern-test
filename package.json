@@ -102,7 +102,9 @@
     "webpack-hot-middleware": "2.20.0"
   },
   "dependencies": {
+    "auth0-js": "^9.2.3",
     "babel-polyfill": "6.26.0",
+    "bcrypt": "^1.0.3",
     "body-parser": "1.18.2",
     "bootstrap": "^3.3.7",
     "config": "^1.25.1",

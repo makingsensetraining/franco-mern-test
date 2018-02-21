@@ -1,42 +1,48 @@
-import User from './user.schema';
+import User from "./user.schema";
 
 class UserService {
   findAll(cb) {
     User.find()
       .then(users => cb(null, users))
-      .catch(err => cb('Unable to retrieve users.'));
+      .catch(err => cb("Unable to retrieve users."));
   }
 
   findById(id, cb) {
     User.findById(id)
       .then(user => cb(null, user))
-      .catch(err => cb('Unable to find user.'));
+      .catch(err => cb("Unable to find user."));
   }
 
   create(data, cb) {
     let user = new User(data);
-    user.save();
-    return cb(null, user);
+    user.save(err => {
+      if (err) cb(err);
+
+      cb(null, user);
+    });
   }
 
   update(id, data, cb) {
     delete data.id;
 
-    User.findByIdAndUpdate(id, data, { new: true }) // Using { new: true } to return the modified document rather than the original.
-      .then((user) => {
+    // remove password field if it's empty
+    data.password || delete data.password;
+
+    User.findByIdAndUpdate(id, {$set: data})
+      .then(user => {
         if (!user) return cb(`The user doesn't exist.`);
         cb(null, user);
       })
-      .catch(err => cb('Unable to update user.'));
+      .catch(err => cb(err));
   }
 
   delete(id, cb) {
-    User.findByIdAndRemove(id, { select: '_id' })
-      .then((user) => {
+    User.findByIdAndRemove(id, { select: "_id" })
+      .then(user => {
         if (!user) return cb(`The user doesn't exist.`);
         cb(null, id);
       })
-      .catch(err => cb('Unable to delete user.'));
+      .catch(err => cb("Unable to delete user."));
   }
 }
 

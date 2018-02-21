@@ -46,6 +46,7 @@ class UserForm extends Component {
           <Input formNoValidate required name="email" label="Email" placeholder="Email" value={this.props.user.email || ''}
             validations="isEmail"
             validationError="This is not a valid email" />
+          <Input formNoValidate required={!this.props.user.id} type="password" name="password" label="Password" placeholder="Password" value="" />
           <div>
             <button type="button" onClick={this.resetForm}>Reset</button>
             &nbsp;
