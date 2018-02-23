@@ -18,7 +18,7 @@ function AuthenticationManager({ children, router, location, authenticated }) {
 }
 
 const mapStateToProps = state => ({
-  authenticated: state.auth.authenticated,
+  authenticated: state.reducers.auth.authenticated,
 });
 
 AuthenticationManager.propTypes = {

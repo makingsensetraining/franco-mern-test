@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import Header from '../common/Header';
-import Footer from '../common/Footer';
+import React from "react";
+import PropTypes from "prop-types";
+import Header from "../common/Header";
+import Footer from "../common/Footer";
 
 // This component handles the App template used on every page.
 export default class SignedInLayout extends React.Component {
@@ -17,5 +18,5 @@ export default class SignedInLayout extends React.Component {
 }
 
 SignedInLayout.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired
 };

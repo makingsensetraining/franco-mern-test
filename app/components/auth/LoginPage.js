@@ -30,7 +30,7 @@ LoginPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  error: state.auth.error
+  error: state.reducers.auth.error
 });
 
 export default connect(mapStateToProps, { loginAction, loginFailed })(LoginPage);
