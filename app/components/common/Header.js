@@ -53,7 +53,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  user: state.reducers.auth.user,
 });
 
 export default connect(mapStateToProps)(Header);
