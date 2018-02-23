@@ -22,7 +22,7 @@ export default (
         <Route path="/logout" component={Logout} />
         <Route path="/callback" component={CallbackLoading} />
       </Route>
-      <Route component={SignedInLayout} path=" /">
+      <Route component={SignedInLayout} path="/">
         <IndexRoute component={HomePage} />
         <Route path="/app/users" component={UsersPageComponent} />
         <Route path="/app/users/add" component={UserAddPage} />
