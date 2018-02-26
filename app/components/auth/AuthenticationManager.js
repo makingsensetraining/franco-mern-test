@@ -1,13 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
+import authService from "../../services/authService";
 
-function AuthenticationManager({ children, router, location, authenticated }) {
+function AuthenticationManager({ children, router, location }) {
   const render = () => {
-    const {pathname} = location;
+    const { pathname } = location;
 
-    if(!authenticated && (pathname !== '/login' && pathname !== '/callback')) {
-      router.replace('/login');
+    if (
+      !authService.isAuthenticated() &&
+      (pathname !== "/login" && pathname !== "/callback")
+    ) {
+      router.replace("/login");
       return null;
     }
 
@@ -17,15 +20,10 @@ function AuthenticationManager({ children, router, location, authenticated }) {
   return render();
 }
 
-const mapStateToProps = state => ({
-  authenticated: state.reducers.auth.authenticated,
-});
-
 AuthenticationManager.propTypes = {
   children: PropTypes.element.isRequired,
   router: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  authenticated: PropTypes.bool.isRequired,
 };
 
-export default connect(mapStateToProps)(AuthenticationManager);
+export default AuthenticationManager;

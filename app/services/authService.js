@@ -32,12 +32,21 @@ class AuthService {
           reject(err);
         }
         if (authResult && authResult.accessToken && authResult.idToken) {
+          const {accessToken, idToken, expiresIn} = authResult;
+          const expiresAt = JSON.stringify((expiresIn * 1000) + new Date().getTime());
+          localStorage.setItem('auth', JSON.stringify({accessToken, idToken, expiresAt}));
           resolve(authResult);
         } else {
           resolve(null);
         }
       });
     });
+  }
+
+  static isAuthenticated() {
+    const auth = JSON.parse(localStorage.getItem('auth'));
+
+    return auth.expiresAt && new Date().getTime() < auth.expiresAt;
   }
 }
 

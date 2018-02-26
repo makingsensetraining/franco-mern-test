@@ -13,7 +13,6 @@ class CallbackLoading extends Component {
         if (!auth) {
           this.props.router.push('/login');
         } else {
-          localStorage.setItem('auth', JSON.stringify(auth));
           this.props.loginSuccess(auth.idTokenPayload);
           this.props.router.push('/');
         }
