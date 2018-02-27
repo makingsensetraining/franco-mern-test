@@ -3,10 +3,10 @@ import auth0 from 'auth0-js';
 class AuthService {
   constructor() {
     this.webAuth = new auth0.WebAuth({
-      domain: "makingsense-mern-seed.auth0.com",
-      clientID: "cpdl0E7zSsp7HujafhA7Fyw4HsjmrVsc",
+      domain: process.env.AUTH0_DOMAIN,
+      clientID: process.env.AUTH0_CLIENTID,
       responseType: 'id_token token',
-      redirectUri: "http://localhost:3000/callback",
+      redirectUri: process.env.AUTH0_REDIRECT_URI,
     });
   }
 
@@ -14,14 +14,14 @@ class AuthService {
     this.webAuth.login({
       email,
       password,
-      realm: "Username-Password-Authentication",
+      realm: process.env.AUTH0_CONNECTION_REALM,
     }, errorCallback);
   }
 
   logout() {
     this.webAuth.logout({
-      clientID: "cpdl0E7zSsp7HujafhA7Fyw4HsjmrVsc",
-      returnTo: 'http://localhost:3000'
+      clientID: process.env.AUTH0_CLIENTID,
+      returnTo: process.env.AUTH0_LOGOUT_RETURN_TO
     });
     localStorage.removeItem('auth');
   }
