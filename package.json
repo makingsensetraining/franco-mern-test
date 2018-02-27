@@ -139,5 +139,8 @@
     "redux-logger": "3.0.6",
     "redux-thunk": "2.2.0",
     "toastr": "^2.1.2"
+  },
+  "jest": {
+    "setupFiles": ["jest-localstorage-mock"]
   }
 }
