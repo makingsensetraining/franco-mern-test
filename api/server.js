@@ -1,5 +1,5 @@
 import express from "express";
-import jwt from "express-jwt";
+import jwt, {UnauthorizedError} from "express-jwt";
 import jwksRsa from 'jwks-rsa';
 import bodyParser from "body-parser";
 import webpack from "webpack";
@@ -49,6 +49,12 @@ addApiRoutes(app);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../app/index.html"));
+});
+
+app.use((err, req, res, next) => {
+  if(err instanceof UnauthorizedError && err.code === 'credentials_required') {
+    res.redirect('/');
+  }
 });
 
 mongodbConnection.once("open", () => {

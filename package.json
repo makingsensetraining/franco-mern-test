@@ -137,10 +137,13 @@
     "reboron": "0.4.5",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
+    "redux-persist": "^5.9.1",
     "redux-thunk": "2.2.0",
     "toastr": "^2.1.2"
   },
   "jest": {
-    "setupFiles": ["jest-localstorage-mock"]
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ]
   }
 }
