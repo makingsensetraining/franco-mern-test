@@ -21,8 +21,9 @@ class AuthService {
   logout() {
     this.webAuth.logout({
       clientID: "cpdl0E7zSsp7HujafhA7Fyw4HsjmrVsc",
-      returnTo: 'http://localhost:3000/'
+      returnTo: 'http://localhost:3000'
     });
+    localStorage.removeItem('auth');
   }
 
   handleAuthentication() {
@@ -43,10 +44,10 @@ class AuthService {
     });
   }
 
-  static isAuthenticated() {
+  isAuthenticated() {
     const auth = JSON.parse(localStorage.getItem('auth'));
 
-    return auth.expiresAt && new Date().getTime() < auth.expiresAt;
+    return auth && new Date().getTime() < auth.expiresAt;
   }
 }
 
