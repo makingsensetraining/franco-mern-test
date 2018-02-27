@@ -5,6 +5,7 @@ dist
 # Ignore config files
 /config/*
 /ux/*
+.env
 
 # except default.json which is maintained
 !/config/default.json

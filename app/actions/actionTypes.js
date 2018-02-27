@@ -9,4 +9,6 @@ export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 export const SAVING_USER = 'SAVING_USER';
 export const REQUEST_USER_ID = 'REQUEST_USER_ID';
-
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGOUT = 'LOGOUT';

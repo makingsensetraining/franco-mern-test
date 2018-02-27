@@ -29,7 +29,8 @@ class UserEditPage extends Component {
     let data = {
       id: this.props.user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      password: user.password
     };
 
     this.props.actions.updateUser(data);
