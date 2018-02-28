@@ -24,7 +24,7 @@ class UserAddPage extends Component {
   }
 
   handleSave(user) {
-    this.props.actions.createUser(user);
+    this.props.actions.create(user);
   }
 
   render() {

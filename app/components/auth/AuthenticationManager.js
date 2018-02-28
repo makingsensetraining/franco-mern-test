@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import authService from "../../services/authService";
+import userService from "../../services/userService";
 
 function AuthenticationManager({ children, router, location }) {
   const render = () => {
     const { pathname } = location;
 
     if (
-      !authService.isAuthenticated() &&
+      !userService.isAuthenticated() &&
       (pathname !== "/login" && pathname !== "/callback")
     ) {
       router.replace("/login");
