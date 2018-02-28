@@ -1,6 +1,7 @@
 import express from "express";
-import jwt, {UnauthorizedError} from "express-jwt";
-import jwksRsa from 'jwks-rsa';
+import { config as envConfig } from "dotenv";
+import jwt, { UnauthorizedError } from "express-jwt";
+import jwksRsa from "jwks-rsa";
 import bodyParser from "body-parser";
 import webpack from "webpack";
 import path from "path";
@@ -9,6 +10,9 @@ import open from "open";
 import mongodbConnection from "./database/mongodb";
 import apiConfig from "config";
 import addApiRoutes from "./addApiRoutes";
+
+// load .env configuration
+envConfig();
 
 /* eslint-disable no-console */
 
@@ -19,15 +23,16 @@ app.use("/static", express.static(__dirname + "../app"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+console.log(process.env.AUTH0_JWKS_URI);
 app.use(
   jwt({
     secret: jwksRsa.expressJwtSecret({
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: `https://makingsense-mern-seed.auth0.com/.well-known/jwks.json`
+      jwksUri: process.env.AUTH0_JWKS_URI
     }),
-    algorithms: ['RS256']
+    algorithms: ["RS256"]
   }).unless({
     path: [
       "/",
@@ -52,8 +57,8 @@ app.get("/*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  if(err instanceof UnauthorizedError && err.code === 'credentials_required') {
-    res.redirect('/');
+  if (err instanceof UnauthorizedError && err.code === "credentials_required") {
+    res.redirect("/");
   }
 });
 

@@ -15,6 +15,19 @@ function buildRequest(url, options) {
   return new Request(url, options);
 }
 
+function buildAuth0Request(url, options) {
+  if (options.needCredentials === undefined) options.needCredentials = true;
+
+  if (options.needCredentials) {
+    const { accessToken } = JSON.parse(localStorage.getItem("auth"));
+    options.headers = Object.assign({}, options.headers, {
+      Authorization: `Bearer ${accessToken}`
+    });
+  }
+
+  return new Request(url, options);
+}
+
 class UserService {
   constructor() {
     this.webAuth = new auth0.WebAuth({
@@ -74,9 +87,12 @@ class UserService {
   }
 
   loadUsers() {
-    const request = buildRequest(`${endpoints.BASE_URL}${endpoints.GET_USERS}`, {
-      method: "GET"
-    });
+    const request = buildRequest(
+      `${endpoints.BASE_URL}${endpoints.GET_USERS}`,
+      {
+        method: "GET"
+      }
+    );
 
     return fetch(request).then(response => response.json());
   }
@@ -108,7 +124,7 @@ class UserService {
           connection: process.env.AUTH0_CONNECTION_REALM
         },
         (err, response) => {
-          if(err) reject(err);
+          if (err) reject(err);
 
           resolve(response);
         }
@@ -151,4 +167,4 @@ class UserService {
   }
 }
 
-export default new UserService;
+export default new UserService();

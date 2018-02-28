@@ -30,7 +30,7 @@ export class UsersPage extends Component {
   }
 
   onClickDetail(userId) {
-    this.props.actions.get(userId, true);
+    this.props.actions.getUser(userId, true);
   }
 
   onClickDelete(userId) {
@@ -38,7 +38,7 @@ export class UsersPage extends Component {
   }
 
   handleDelete() {
-    this.props.actions.delete(this.props.userToDelete);
+    this.props.actions.deleteUser(this.props.userToDelete);
   }
 
   render() {

@@ -1,6 +1,16 @@
 import User from "./user.schema";
+import auth0 from "auth0";
 
 class UserService {
+  constructor() {
+    this.mgmtClient = new auth0.ManagementClient({
+      domain: process.env.AUTH0_DOMAIN,
+      clientId: process.env.NIC_CLIENTID,
+      clientSecret: process.env.NIC_CLIENT_SECRET,
+      scope: "read:users update:users delete:users"
+    });
+  }
+
   findAll(cb) {
     User.find()
       .then(users => cb(null, users))
@@ -13,22 +23,13 @@ class UserService {
       .catch(err => cb("Unable to find user."));
   }
 
-  create(data, cb) {
-    let user = new User(data);
-    user.save(err => {
-      if (err) cb(err);
-
-      cb(null, user);
-    });
-  }
-
   update(id, data, cb) {
     delete data.id;
 
     // remove password field if it's empty
     data.password || delete data.password;
 
-    User.findByIdAndUpdate(id, {$set: data})
+    User.findByIdAndUpdate(id, { $set: data })
       .then(user => {
         if (!user) return cb(`The user doesn't exist.`);
         cb(null, user);
@@ -36,13 +37,13 @@ class UserService {
       .catch(err => cb(err));
   }
 
-  delete(id, cb) {
-    User.findByIdAndRemove(id, { select: "_id" })
-      .then(user => {
-        if (!user) return cb(`The user doesn't exist.`);
-        cb(null, id);
-      })
-      .catch(err => cb("Unable to delete user."));
+  /**
+   *
+   * @param id
+   * @returns {Promise}
+   */
+  delete(id) {
+    return this.mgmtClient.deleteUser({id: 'auth0|' + id});
   }
 }
 

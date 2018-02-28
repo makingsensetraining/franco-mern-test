@@ -65,6 +65,16 @@ export function updateUserSuccess(user) {
   };
 }
 
+export function requestUserId(userId) {
+  return (dispatch) => {
+    dispatch({
+      type: types.REQUEST_USER_ID,
+      userToDelete: userId
+    });
+    dispatch(showModalSuccess('userDeleteModal'));
+  };
+}
+
 export function deleteUserSuccess(userId) {
   return {
     type: types.DELETE_USER_SUCCESS,
