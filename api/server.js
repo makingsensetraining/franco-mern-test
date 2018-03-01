@@ -8,7 +8,6 @@ import path from "path";
 import config from "../webpack.config";
 import open from "open";
 import mongodbConnection from "./database/mongodb";
-import apiConfig from "config";
 import addApiRoutes from "./addApiRoutes";
 
 // load .env configuration
@@ -23,7 +22,6 @@ app.use("/static", express.static(__dirname + "../app"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log(process.env.AUTH0_JWKS_URI);
 app.use(
   jwt({
     secret: jwksRsa.expressJwtSecret({
@@ -65,8 +63,8 @@ app.use((err, req, res, next) => {
 mongodbConnection.once("open", () => {
   console.log("Mongodb server connected.");
 
-  app.listen(apiConfig.api.port, err => {
+  app.listen(process.env.API_PORT, err => {
     if (err) return console.log(err);
-    open(`${apiConfig.api.host}:${apiConfig.api.port}`);
+    open(`${process.env.API_HOST}:${process.env.API_PORT}`);
   });
 });

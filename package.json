@@ -108,7 +108,6 @@
     "bcrypt": "^1.0.3",
     "body-parser": "1.18.2",
     "bootstrap": "^3.3.7",
-    "config": "^1.25.1",
     "dotenv": "^5.0.1",
     "dotenv-webpack": "^1.5.4",
     "esprima": "^4.0.0",
@@ -142,10 +141,5 @@
     "redux-persist": "^5.9.1",
     "redux-thunk": "2.2.0",
     "toastr": "^2.1.2"
-  },
-  "jest": {
-    "setupFiles": [
-      "jest-localstorage-mock"
-    ]
   }
 }
