@@ -35,11 +35,9 @@ class UserController {
 
     UserService.delete(id)
       .then(() => {
-        res.status(200).end();
+        res.status(200).json({ id });
       })
-      .catch(e => {
-        next(new Error(e));
-      });
+      .catch(next);
   }
 }
 

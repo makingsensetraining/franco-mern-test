@@ -13,14 +13,14 @@ export function loginAction(email, password, errorCallback) {
 export function loginSuccess(user) {
   return {
     type: types.LOGIN_SUCCESS,
-    user: user,
+    user: user
   };
 }
 
 export function loginFailed(error) {
   return {
     type: types.LOGIN_FAILED,
-    error,
+    error
   };
 }
 
@@ -66,12 +66,12 @@ export function updateUserSuccess(user) {
 }
 
 export function requestUserId(userId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: types.REQUEST_USER_ID,
       userToDelete: userId
     });
-    dispatch(showModalSuccess('userDeleteModal'));
+    dispatch(showModalSuccess("userDeleteModal"));
   };
 }
 
@@ -93,7 +93,7 @@ export function loadUsers() {
 }
 
 export function getUser(id, showUserDetails = false) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(hideAlertSuccess());
     return userService
       .get(id)
@@ -108,16 +108,17 @@ export function getUser(id, showUserDetails = false) {
 }
 
 export function createUser(user) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(hideAlertSuccess());
     dispatch(savingUser());
     return userService
       .create(user)
       .then(createdUser => {
         const user = {
-          id: createdUser._id,
+          id: createdUser.userId,
           name: createdUser.name,
-          email: createdUser.email
+          email: createdUser.email,
+          createdAt: new Date().toISOString()
         };
         dispatch(createUserSuccess(user));
         dispatch(savingUser(false));
@@ -132,7 +133,7 @@ export function createUser(user) {
 }
 
 export function updateUser(user) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(hideAlertSuccess());
     dispatch(savingUser());
     return userService
@@ -151,12 +152,14 @@ export function updateUser(user) {
 }
 
 export function deleteUser(id) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(hideAlertSuccess());
+    dispatch(showAlertSuccess("Removing user...", "info"));
     return userService
       .delete(id)
       .then(() => {
         dispatch(deleteUserSuccess(id));
+        dispatch(hideAlertSuccess());
         dispatch(showAlertSuccess("User removed", "success"));
       })
       .catch(error => dispatch(showAlertSuccess(error.description, "error")));

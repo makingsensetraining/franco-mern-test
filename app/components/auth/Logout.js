@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import userService from '../../services/userService';
 
-export function Logout({ router, logout }) {
+function Logout({ router, logout }) {
   userService.logout();
   logout();
   return null;
