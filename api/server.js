@@ -1,14 +1,17 @@
 import express from "express";
-import jwt, {UnauthorizedError} from "express-jwt";
-import jwksRsa from 'jwks-rsa';
+import { config as envConfig } from "dotenv";
+import jwt, { UnauthorizedError } from "express-jwt";
+import jwksRsa from "jwks-rsa";
 import bodyParser from "body-parser";
 import webpack from "webpack";
 import path from "path";
 import config from "../webpack.config";
 import open from "open";
 import mongodbConnection from "./database/mongodb";
-import apiConfig from "config";
 import addApiRoutes from "./addApiRoutes";
+
+// load .env configuration
+envConfig();
 
 /* eslint-disable no-console */
 
@@ -25,9 +28,9 @@ app.use(
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: `https://makingsense-mern-seed.auth0.com/.well-known/jwks.json`
+      jwksUri: process.env.AUTH0_JWKS_URI
     }),
-    algorithms: ['RS256']
+    algorithms: ["RS256"]
   }).unless({
     path: [
       "/",
@@ -52,16 +55,16 @@ app.get("/*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  if(err instanceof UnauthorizedError && err.code === 'credentials_required') {
-    res.redirect('/');
+  if (err instanceof UnauthorizedError && err.code === "credentials_required") {
+    res.redirect("/");
   }
 });
 
 mongodbConnection.once("open", () => {
   console.log("Mongodb server connected.");
 
-  app.listen(apiConfig.api.port, err => {
+  app.listen(process.env.API_PORT, err => {
     if (err) return console.log(err);
-    open(`${apiConfig.api.host}:${apiConfig.api.port}`);
+    open(`${process.env.API_HOST}:${process.env.API_PORT}`);
   });
 });

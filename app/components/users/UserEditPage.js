@@ -33,7 +33,7 @@ class UserEditPage extends Component {
       password: user.password
     };
 
-    this.props.actions.updateUser(data);
+    this.props.actions.update(data);
   }
 
   render() {

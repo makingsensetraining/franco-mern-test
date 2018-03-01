@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { logout } from '../../actions/authActions';
-import authService from '../../services/authService';
+import { logout } from '../../actions/userActions';
+import userService from '../../services/userService';
 
-export function Logout({ router, logout }) {
-  authService.logout();
+function Logout({ router, logout }) {
+  userService.logout();
   logout();
   return null;
 }

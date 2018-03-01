@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import loginService from '../../services/authService';
-import { loginSuccess, loginFailed } from '../../actions/authActions';
+import loginService from '../../services/userService';
+import { loginSuccess, loginFailed } from '../../actions/userActions';
 
 class CallbackLoading extends Component {
   componentDidMount() {

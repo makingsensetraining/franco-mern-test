@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import LoginForm from './LoginForm';
-import {loginAction, loginFailed} from '../../actions/authActions';
+import LoginForm from "./LoginForm";
+import { loginAction, loginFailed } from "../../actions/userActions";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -13,9 +13,9 @@ class LoginPage extends Component {
 
   submit(values) {
     const { email, password } = values;
-    this.props.loginAction(email, password, (e => {
+    this.props.loginAction(email, password, e => {
       this.props.loginFailed(e);
-    }));
+    });
   }
 
   render() {
@@ -29,8 +29,10 @@ LoginPage.propTypes = {
   error: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   error: state.reducers.auth.error
 });
 
-export default connect(mapStateToProps, { loginAction, loginFailed })(LoginPage);
+export default connect(mapStateToProps, { loginAction, loginFailed })(
+  LoginPage
+);

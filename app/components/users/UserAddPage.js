@@ -48,7 +48,7 @@ UserAddPage.propTypes = {
   user: PropTypes.object
 };
 
-function mapStatesToProps(state, ownProps) {
+function mapStatesToProps(state) {
   let user = {
     id: 0,
     name: '',
